@@ -7,9 +7,9 @@ venv/
 env/
 *.pkl
 *.joblib
-!backend/artifacts/diabetic_readmission_pipeline.pkl
+!backend/app/artifacts/*.pkl
 
-# Data Files (Keep structure, ignore raw heavy csv)
+# Data Files
 data/raw/*
 !data/raw/.gitkeep
 
