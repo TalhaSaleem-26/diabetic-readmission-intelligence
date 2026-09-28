@@ -1,13 +1,16 @@
 import joblib
 import pandas as pd
 import numpy as np
+from pathlib import Path
 from app.config import ARTIFACTS_DIR, OPTIMAL_THRESHOLD
 
-MODEL_PATH = ARTIFACTS_DIR / "diabetic_readmission_pipeline.pkl"
+CURRENT_DIR = Path(__file__).resolve().parent  
+MODEL_PATH = CURRENT_DIR.parent / "artifacts" / "diabetic_readmission_pipeline.pkl"
 
 def load_artifacts():
     try:
         pipeline = joblib.load(MODEL_PATH)
+        print(f"✅ Successfully loaded artifact from: {MODEL_PATH}")
         return pipeline
     except Exception as e:
         print(f"⚠️ Error loading model artifact: {e}")
@@ -19,7 +22,7 @@ def predict_readmission(data_dict: dict, pipeline=None):
 
     df = pd.DataFrame([data_dict])
 
-    # 1. Combination Medication Fields Fill (agar frontend se na aaye hon)
+    
     combo_meds = [
         'glyburide-metformin', 'glipizide-metformin', 
         'glimepiride-pioglitazone', 'metformin-rosiglitazone', 
@@ -29,7 +32,7 @@ def predict_readmission(data_dict: dict, pipeline=None):
         if med not in df.columns:
             df[med] = "No"
 
-    # 2. Domain Engineered Features Calculate/Ensure
+    
     time_stay = df['time_in_hospital'].iloc[0] if 'time_in_hospital' in df.columns and df['time_in_hospital'].iloc[0] > 0 else 1
     num_meds = df['num_medications'].iloc[0] if 'num_medications' in df.columns else 1
     num_labs = df['num_lab_procedures'].iloc[0] if 'num_lab_procedures' in df.columns else 1
@@ -50,7 +53,7 @@ def predict_readmission(data_dict: dict, pipeline=None):
     if 'health_index' not in df.columns:
         df['health_index'] = (inpatient * 3) + (emergency * 2) + outpatient
 
-    # 3. Model Inference
+  
     try:
         if hasattr(pipeline, "predict_proba"):
             probs = pipeline.predict_proba(df)[:, 1]
