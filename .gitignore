@@ -1,0 +1,29 @@
+# Python & Virtual Environment
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+*.pkl
+*.joblib
+
+# Data Files (Keep structure, ignore raw heavy csv)
+data/raw/*
+!data/raw/.gitkeep
+
+# Node.js / React Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Environment Variables (Root, Backend, Frontend sab cover honge)
+.env
+.env.*
+!.env.example
+
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
