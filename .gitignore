@@ -7,6 +7,7 @@ venv/
 env/
 *.pkl
 *.joblib
+!backend/artifacts/diabetic_readmission_pipeline.pkl
 
 # Data Files (Keep structure, ignore raw heavy csv)
 data/raw/*
@@ -17,7 +18,7 @@ frontend/node_modules/
 frontend/dist/
 frontend/build/
 
-# Environment Variables (Root, Backend, Frontend sab cover honge)
+# Environment Variables
 .env
 .env.*
 !.env.example
